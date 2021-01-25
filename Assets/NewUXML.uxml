@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="newUss.uss" />
+    <ui:VisualElement style="background-color: rgba(113, 65, 65, 255); flex-direction: column; flex-wrap: wrap; -unity-text-align: middle-left; position: absolute; right: 50px; display: flex; visibility: visible; opacity: 1;">
+        <ui:Button text="Buttonlk" display-tooltip-when-elided="true" class="button" />
+        <ui:Button text="Buttonlk" display-tooltip-when-elided="true" class="button" />
+        <ui:Button text="Buttonlk" display-tooltip-when-elided="true" class="button" style="background-image: url(&apos;/Assets/UI Toolkit/Sprites/EmojiOne.png&apos;); -unity-background-scale-mode: scale-to-fit;" />
+        <ui:Button text="Buttonlk" display-tooltip-when-elided="true" class="button" />
+        <ui:Button text="Buttonlk" display-tooltip-when-elided="true" class="button" />
+        <ui:Button text="Button" display-tooltip-when-elided="true" name="mybutton" />
+        <ui:Label text="Label" display-tooltip-when-elided="true" />
+        <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" />
+        <ui:MinMaxSlider picking-mode="Ignore" label="Min/Max Slider" min-value="10" max-value="12" low-limit="-10" high-limit="40" />
+    </ui:VisualElement>
+    <ui:ListView focusable="true" />
+    <ui:Label text="Label" display-tooltip-when-elided="true" />
+    <ui:Label text="Label" display-tooltip-when-elided="true" />
+</ui:UXML>
