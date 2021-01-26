@@ -11,9 +11,9 @@ public class Demonstration : MonoBehaviour
     public Material material;
 
    public void DrawPressed()
-    {
+   {
         CreateFigure();
-    }
+   }
 
     private void CreateFigure()
     { 
@@ -22,19 +22,21 @@ public class Demonstration : MonoBehaviour
         // dealing with MeshFilter 
         var meshFilter = myFigure.AddComponent<MeshFilter>();
         meshFilter.sharedMesh = new Mesh();
+
         // --- избавиться от уточнения фигуры
         ParallelepipedOptions parallelepipedOptions = new ParallelepipedOptions() { depth = 5f, height = 5f, width = 5f };
         Parallelepiped parallelepiped = new Parallelepiped(parallelepipedOptions);
 
+        // create and fill mesh
         Mesh mesh = parallelepiped.GetFigure();
 
         //mesh.Optimize();
         mesh.RecalculateNormals();
 
-        // array with vertices
+        // use mesh
         meshFilter.sharedMesh = mesh;
 
-        // dealing with MeshRenderer
+        // MeshRenderer
         var meshRenderer = myFigure.AddComponent<MeshRenderer>();
         meshRenderer.material = material;
     }

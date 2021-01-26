@@ -1,8 +1,6 @@
 using Assets.Scripts.FiguresOptions;
 using Assets.Scripts.Interfaces;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
  
 public class Parallelepiped : IFigure
