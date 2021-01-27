@@ -5,5 +5,5 @@ using UnityEngine;
 
 public interface IFigure
 {
-    Mesh GetFigure();
+    Mesh GetMesh();
 }

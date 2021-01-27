@@ -7,5 +7,7 @@ namespace Assets.Scripts.FiguresOptions
         public float width;
         public float height;
         public float depth;
+
+        public override string ToString() => $"w: {width}, h: {height}, d: {depth}";
     }
 }

@@ -8,7 +8,7 @@ public class Parallelepiped : IFigure
 	private const int count = 10; 
 	private const int minCount = 3;
 
-	private int nStepWidth, nStepHeight, nStepDepth;
+	private int StepWidthCount, StepHeightCount, StepDepthCount;
 
 	private float stepSizeWidth, stepSizeHeight, stepSizeDepth;
 	  
@@ -35,11 +35,11 @@ public class Parallelepiped : IFigure
 	private Vector3[] GenerateVertices() 
 	{
 		int cornerVertices = 8;
-		int edgeVertices = (nStepWidth + nStepHeight + nStepDepth - 3) * 4;
+		int edgeVertices = (StepWidthCount + StepHeightCount + StepDepthCount - 3) * 4;
 		int faceVertices = (
-			(nStepWidth - 1) * (nStepHeight - 1) +
-			(nStepWidth - 1) * (nStepDepth - 1) +
-			(nStepHeight - 1) * (nStepDepth - 1)) * 2;
+			(StepWidthCount - 1) * (StepHeightCount - 1) +
+			(StepWidthCount - 1) * (StepDepthCount - 1) +
+			(StepHeightCount - 1) * (StepDepthCount - 1)) * 2;
 
 		// result
 		vertices = new Vector3[cornerVertices + edgeVertices + faceVertices];
@@ -57,50 +57,50 @@ public class Parallelepiped : IFigure
 	/// </summary>
 	private void GetStepSizes()
     {
-		nStepHeight = count;
-		stepSizeHeight = _options.height / nStepHeight;//y
+		StepHeightCount = count;
+		stepSizeHeight = _options.height / StepHeightCount;//y
 		 
-		nStepWidth = Mathf.RoundToInt(_options.width / stepSizeHeight);//x
-		if (nStepWidth < minCount)
+		StepWidthCount = Mathf.RoundToInt(_options.width / stepSizeHeight);//x
+		if (StepWidthCount < minCount)
         {
-			nStepWidth = minCount;
+			StepWidthCount = minCount;
 		}
-		stepSizeWidth = _options.width / nStepWidth;
+		stepSizeWidth = _options.width / StepWidthCount;
 
-		nStepDepth = Mathf.RoundToInt(_options.depth / stepSizeHeight);//z
-		if (nStepDepth < minCount)
+		StepDepthCount = Mathf.RoundToInt(_options.depth / stepSizeHeight);//z
+		if (StepDepthCount < minCount)
 		{
-			nStepDepth = minCount;
+			StepDepthCount = minCount;
 		}
-		stepSizeDepth = _options.depth / nStepDepth;
+		stepSizeDepth = _options.depth / StepDepthCount;
 	}
 
 	/// <summary>
 	/// filling the set of vertices on walls
 	/// </summary>
-	/// <param name="v">current amount of vertices</param>
-	private void GenerateVerticesWall(ref int v)
+	/// <param name="numCurrentVertic">current amount of vertices</param>
+	private void GenerateVerticesWall(ref int numCurrentVertic)
     {
 		float currentHeight = 0.0f;
 
 		// loop by layers
-		for (int y = 0; y <= nStepHeight; y++)
+		for (int y = 0; y <= StepHeightCount; y++)
 		{
-			for (int x = 0; x <= nStepWidth; x++)
+			for (int x = 0; x <= StepWidthCount; x++)
 			{
-				vertices[v++] = new Vector3(x * stepSizeWidth, currentHeight, 0);
+				vertices[numCurrentVertic++] = new Vector3(x * stepSizeWidth, currentHeight, 0);
 			}
-			for (int z = 1; z <= nStepDepth; z++)
+			for (int z = 1; z <= StepDepthCount; z++)
 			{
-				vertices[v++] = new Vector3(_options.width, currentHeight, z * stepSizeDepth);
+				vertices[numCurrentVertic++] = new Vector3(_options.width, currentHeight, z * stepSizeDepth);
 			}
-			for (int x = nStepWidth - 1; x >= 0; x--)
+			for (int x = StepWidthCount - 1; x >= 0; x--)
 			{
-				vertices[v++] = new Vector3(x * stepSizeWidth, currentHeight, _options.depth);
+				vertices[numCurrentVertic++] = new Vector3(x * stepSizeWidth, currentHeight, _options.depth);
 			}
-			for (int z = nStepDepth - 1; z > 0; z--)
+			for (int z = StepDepthCount - 1; z > 0; z--)
 			{
-				vertices[v++] = new Vector3(0, currentHeight, z * stepSizeDepth);
+				vertices[numCurrentVertic++] = new Vector3(0, currentHeight, z * stepSizeDepth);
 			}
 
 			currentHeight += stepSizeHeight;
@@ -134,9 +134,9 @@ public class Parallelepiped : IFigure
 	/// <param name="v">current amount of vertices</param>
 	private void GenerateVerticesHorizontalPlane(float y, ref int v)
 	{
-		for (int z = 1; z < nStepDepth; z++)
+		for (int z = 1; z < StepDepthCount; z++)
 		{
-			for (int x = 1; x < nStepWidth; x++)
+			for (int x = 1; x < StepWidthCount; x++)
 			{
 				vertices[v++] = new Vector3(x * stepSizeWidth, y, z * stepSizeDepth);
 			}
@@ -168,18 +168,18 @@ public class Parallelepiped : IFigure
 	private int[] GenerateIndexes() 
 	{
 		// one quad contains two triangles ( i.e. 6 indexes )
-		int quads = (nStepWidth * nStepHeight + nStepWidth * nStepDepth + nStepHeight * nStepDepth) * 2;
+		int quads = (StepWidthCount * StepHeightCount + StepWidthCount * StepDepthCount + StepHeightCount * StepDepthCount) * 2;
 		indexes = new int[quads * 6];
 
 		// amount of vertices on a ring 
-		int ring = (nStepWidth + nStepDepth) * 2;
+		int ring = (StepWidthCount + StepDepthCount) * 2;
 		// currently amount of indexes
 		int t = 0; 
 		// left low corner
 		int v = 0;
 
 		// loop by layers
-		for (int y = 0; y < nStepHeight; y++, v++)
+		for (int y = 0; y < StepHeightCount; y++, v++)
 		{
 			for (int q = 0; q < ring - 1; q++, v++)
 			{
@@ -203,32 +203,32 @@ public class Parallelepiped : IFigure
 	private int GenerateRoofIndexes(int t, int ring)
 	{
 		// first line
-		int v = ring * nStepHeight;
-		for (int x = 0; x < nStepWidth - 1; x++, v++)
+		int v = ring * StepHeightCount;
+		for (int x = 0; x < StepWidthCount - 1; x++, v++)
 		{
 			t = SetQuad(t, v, v + 1, v + ring - 1, v + ring);
 		}
 		t = SetQuad(t, v, v + 1, v + ring - 1, v + 2);
 
 		// middle part
-		int vMin = ring * (nStepHeight + 1) - 1;
+		int vMin = ring * (StepHeightCount + 1) - 1;
 		int vMid = vMin + 1;
 		int vMax = v + 2;
 
-		for (int z = 1; z < nStepDepth - 1; z++, vMin--, vMid++, vMax++)
+		for (int z = 1; z < StepDepthCount - 1; z++, vMin--, vMid++, vMax++)
 		{
-			t = SetQuad(t, vMin, vMid, vMin - 1, vMid + nStepWidth - 1);
-			for (int x = 1; x < nStepWidth - 1; x++, vMid++)
+			t = SetQuad(t, vMin, vMid, vMin - 1, vMid + StepWidthCount - 1);
+			for (int x = 1; x < StepWidthCount - 1; x++, vMid++)
 			{
-				t = SetQuad( t, vMid, vMid + 1, vMid + nStepWidth - 1, vMid + nStepWidth);
+				t = SetQuad( t, vMid, vMid + 1, vMid + StepWidthCount - 1, vMid + StepWidthCount);
 			}
-			t = SetQuad( t, vMid, vMax, vMid + nStepWidth - 1, vMax + 1);
+			t = SetQuad( t, vMid, vMax, vMid + StepWidthCount - 1, vMax + 1);
 		}
 
 		// last line
 		int vTop = vMin - 2;
 		t = SetQuad(t, vMin, vMid, vMin - 1, vMin - 2);
-		for (int x = 1; x < nStepWidth - 1; x++, vTop--, vMid++)
+		for (int x = 1; x < StepWidthCount - 1; x++, vTop--, vMid++)
 		{
 			t = SetQuad( t, vMid, vMid + 1, vTop, vTop - 1);
 		}
@@ -247,33 +247,33 @@ public class Parallelepiped : IFigure
     {
 		// first line
 		int v = 1;
-		int vMid = vertices.Length - (nStepWidth - 1) * (nStepDepth - 1);
+		int vMid = vertices.Length - (StepWidthCount - 1) * (StepDepthCount - 1);
 		t = SetQuad(t, ring - 1, vMid, 0, 1);
-		for (int x = 1; x < nStepWidth - 1; x++, v++, vMid++)
+		for (int x = 1; x < StepWidthCount - 1; x++, v++, vMid++)
 		{
 			t = SetQuad(t, vMid, vMid + 1, v, v + 1);
 		}
 		t = SetQuad(t, vMid, v + 2, v, v + 1);
 
 		int vMin = ring - 2;
-		vMid -= nStepWidth - 2;
+		vMid -= StepWidthCount - 2;
 		int vMax = v + 2;
 
 		// middle part
-		for (int z = 1; z < nStepWidth - 1; z++, vMin--, vMid++, vMax++)
+		for (int z = 1; z < StepWidthCount - 1; z++, vMin--, vMid++, vMax++)
 		{
-			t = SetQuad(t, vMin, vMid + nStepWidth - 1, vMin + 1, vMid);
-			for (int x = 1; x < nStepWidth - 1; x++, vMid++)
+			t = SetQuad(t, vMin, vMid + StepWidthCount - 1, vMin + 1, vMid);
+			for (int x = 1; x < StepWidthCount - 1; x++, vMid++)
 			{
-				t = SetQuad( t, vMid + nStepWidth - 1, vMid + nStepWidth, vMid, vMid + 1);
+				t = SetQuad( t, vMid + StepWidthCount - 1, vMid + StepWidthCount, vMid, vMid + 1);
 			}
-			t = SetQuad( t, vMid + nStepWidth - 1, vMax + 1, vMid, vMax);
+			t = SetQuad( t, vMid + StepWidthCount - 1, vMax + 1, vMid, vMax);
 		}
 
 		// last line
 		int vTop = vMin - 1;
 		t = SetQuad( t, vTop + 1, vTop, vTop + 2, vMid);
-		for (int x = 1; x < nStepWidth - 1; x++, vTop--, vMid++)
+		for (int x = 1; x < StepWidthCount - 1; x++, vTop--, vMid++)
 		{
 			t = SetQuad( t, vTop, vTop - 1, vMid, vMid + 1);
 		}
@@ -287,7 +287,7 @@ public class Parallelepiped : IFigure
 	/// </summary>
 	/// <param name="option">Parametres of parallelepiped</param>
 	/// <returns></returns>
-	public Mesh GetFigure()
+	public Mesh GetMesh()
     {
 		// calculate amount of triangulas and sizes of one step
 		GetStepSizes();
