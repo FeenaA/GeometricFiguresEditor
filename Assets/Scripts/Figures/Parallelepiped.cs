@@ -173,8 +173,7 @@ public class Parallelepiped : IFigure
 
 		// amount of vertices on a ring 
 		int ring = (StepWidthCount + StepDepthCount) * 2;
-		// currently amount of indexes
-		int t = 0; 
+		int currentIndex = 0; 
 		// left low corner
 		int v = 0;
 
@@ -183,13 +182,13 @@ public class Parallelepiped : IFigure
 		{
 			for (int q = 0; q < ring - 1; q++, v++)
 			{
-				t = SetQuad(t, v, v + 1, v + ring, v + ring + 1);
+				currentIndex = SetQuad(currentIndex, v, v + 1, v + ring, v + ring + 1);
 			}
-			t = SetQuad(t, v, v - ring + 1, v + ring, v + 1);
+			currentIndex = SetQuad(currentIndex, v, v - ring + 1, v + ring, v + 1);
 		}
 
-		t = GenerateRoofIndexes(t, ring);
-		GenerateFloorIndexes(t, ring);
+		currentIndex = GenerateRoofIndexes(currentIndex, ring);
+		GenerateFloorIndexes(currentIndex, ring);
 
 		return indexes;
 	}

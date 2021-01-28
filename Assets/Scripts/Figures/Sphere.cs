@@ -39,7 +39,7 @@ public class Sphere : IFigure
 			float y = i / (sectors + 1);
 			float x_pos = x / sectors;
 			float y_pos = y / layers;
-			vertices[i] = new Vector3(x_pos, y_pos, 0);
+			vertices[i] = new Vector3(x_pos, y_pos, 0f);
 		}
 
 		// выт€гивание по формуле поверхности сферы

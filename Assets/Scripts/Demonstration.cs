@@ -36,6 +36,7 @@ public class Demonstration : MonoBehaviour
 
         currentFigure = new GameObject("MyFigure");
         currentFigure.transform.position = new Vector3(0, 0, 40);
+        currentFigure.transform.Rotate(-30f, 20f, -10f, Space.Self);
 
         // dealing with MeshFilter 
         var meshFilter = currentFigure.AddComponent<MeshFilter>();

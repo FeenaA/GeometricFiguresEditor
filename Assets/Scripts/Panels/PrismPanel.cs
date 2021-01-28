@@ -11,8 +11,8 @@ public class PrismPanel : MonoBehaviour, IPanel
     public InputField inputFieldRadius;
 
     private readonly float defaultHeight = 20f;
-    private readonly float defaultFaces = 15f;
-    private readonly float defaultRadius = 15f;
+    private readonly int defaultFaces = 6;
+    private readonly float defaultRadius = 10f;
 
     private enum PrismOptionsFields
     {
@@ -69,27 +69,20 @@ public class PrismPanel : MonoBehaviour, IPanel
                     }
                 case PrismOptionsFields.Faces:
                     {
-                        inputFieldWidth.text = defaultWidth.ToString();
-                        options.faces = defaultWidth;
+                        inputFieldFaces.text = defaultFaces.ToString();
+                        options.faces = defaultFaces;
                         break;
                     }
                 case PrismOptionsFields.Radius:
                     {
-                        inputFieldDepth.text = defaultDepth.ToString();
-                        options.radius = defaultDepth;
+                        inputFieldRadius.text = defaultRadius.ToString();
+                        options.radius = defaultRadius; 
                         break;
                     }
             }
         }
     }
 
-    public IFigure GetFigure() => new Parallelepiped(options);
+    public IFigure GetFigure() => new Prism(options); 
 
-
-
-
-    public IFigure GetFigure()
-    {
-        throw new System.NotImplementedException();
-    }
 }
