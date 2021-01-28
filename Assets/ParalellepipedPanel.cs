@@ -2,9 +2,18 @@ using Assets.Scripts.FiguresOptions;
 using Figures.Interfaces;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ParalellepipedPanel : MonoBehaviour, IPanel
 {
+    public InputField inputFieldHeight;
+    public InputField inputFieldWidth;
+    public InputField inputFieldDepth; 
+
+    private readonly float defaultHeight = 15f;
+    private readonly float defaultWidth = 15f;
+    private readonly float defaultDepth = 15f; 
+
     private enum ParalellepipedOptionsFields
     {
         Height,
@@ -16,11 +25,13 @@ public class ParalellepipedPanel : MonoBehaviour, IPanel
 
     public GameObject currentGO => gameObject;
 
-    private void Awake()
+    private void Awake() 
     {
         options = new ParallelepipedOptions();
 
-        //heightInput = 5d;
+        inputFieldHeight.text = defaultHeight.ToString();
+        inputFieldWidth.text = defaultWidth.ToString();
+        inputFieldDepth.text = defaultDepth.ToString();
     }
 
     public void OnHeightChanged(string value) => ChangeOptionsValue(value, ParalellepipedOptionsFields.Height);
@@ -46,10 +57,29 @@ public class ParalellepipedPanel : MonoBehaviour, IPanel
                     break;
             }
         }
-
         else
         {
-            //todo: вернуть в поле для ввода корректное значение по умолчанию
+            switch (fieldName)
+            {
+                case ParalellepipedOptionsFields.Height:
+                    {
+                        options.height = defaultHeight;
+                        inputFieldHeight.text = defaultHeight.ToString();
+                        break;
+                    }
+                case ParalellepipedOptionsFields.Width:
+                    {
+                        inputFieldWidth.text = defaultWidth.ToString();
+                        options.width = defaultWidth;
+                        break;
+                    }
+                case ParalellepipedOptionsFields.Depth:
+                    {
+                        inputFieldDepth.text = defaultDepth.ToString();
+                        options.depth = defaultDepth;
+                        break;
+                    }
+            }
         }
     }
 

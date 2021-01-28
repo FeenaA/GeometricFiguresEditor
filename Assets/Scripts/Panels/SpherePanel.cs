@@ -2,9 +2,16 @@
 using Figures.Interfaces;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpherePanel : MonoBehaviour, IPanel
 {
+    public InputField inputFieldRadius;
+    public InputField inputFieldSectors; 
+
+    private readonly float defaultRadius = 15f;
+    private readonly int defaultSectors = 20;
+
     private enum SphereOptionsFields
     {
         Radius, 
@@ -18,7 +25,8 @@ public class SpherePanel : MonoBehaviour, IPanel
     {
         options = new SphereOptions();
 
-        //RadiusInput = 5d;
+        inputFieldRadius.text = defaultRadius.ToString();
+        inputFieldSectors.text = defaultSectors.ToString();
     }
 
     public void OnRadiusChanged(string value) => ChangeOptionsValue(value, SphereOptionsFields.Radius);
@@ -39,10 +47,23 @@ public class SpherePanel : MonoBehaviour, IPanel
                     break;
             }
         }
-
         else
         {
-            //todo: вернуть в поле для ввода корректное значение по умолчанию
+            switch (fieldName)
+            {
+                case SphereOptionsFields.Radius:
+                    {
+                        inputFieldRadius.text = defaultRadius.ToString();
+                        options.radius = defaultRadius;
+                        break;
+                    }
+                case SphereOptionsFields.Sectors:
+                    {
+                        inputFieldSectors.text = defaultSectors.ToString();
+                        options.sectors = defaultSectors;
+                        break;
+                    }
+            }
         }
     }
 

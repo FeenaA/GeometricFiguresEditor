@@ -10,14 +10,12 @@ public class Demonstration : MonoBehaviour
 
     private IPanel _panel;
 
-
+    private GameObject currentFigure; 
 
     private void Awake()
     {
         mainPanel.PanelChanged += OnPanelChanged;
     }
-
-
 
     private void OnPanelChanged(IPanel currentPanel)
     {
@@ -31,28 +29,26 @@ public class Demonstration : MonoBehaviour
 
     private void CreateFigure()
     {
-        var myFigure = new GameObject("MyFigure");
+        if (this.currentFigure != null)
+        {
+            Destroy(this.currentFigure);
+        }
+
+        currentFigure = new GameObject("MyFigure");
+        currentFigure.transform.position = new Vector3(0, 0, 40);
 
         // dealing with MeshFilter 
-        var meshFilter = myFigure.AddComponent<MeshFilter>();
+        var meshFilter = currentFigure.AddComponent<MeshFilter>();
         meshFilter.sharedMesh = new Mesh();
 
         var figure = _panel.GetFigure();
         Mesh mesh = figure.GetMesh();
 
-        //ParallelepipedOptions parallelepipedOptions = new ParallelepipedOptions() { depth = 5f, height = 5f, width = 5f };
-        //Parallelepiped parallelepiped = new Parallelepiped(parallelepipedOptions);
-        // create and fill mesh for parallelepiped
-        //Mesh mesh = parallelepiped.GetFigure();
-
-        //mesh.Optimize();
-        mesh.RecalculateNormals();
-
         // use mesh
         meshFilter.sharedMesh = mesh;
 
         // MeshRenderer
-        var meshRenderer = myFigure.AddComponent<MeshRenderer>();
+        var meshRenderer = currentFigure.AddComponent<MeshRenderer>();
         meshRenderer.material = material;
     }
 }

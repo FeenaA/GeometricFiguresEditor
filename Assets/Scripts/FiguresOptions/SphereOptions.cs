@@ -4,7 +4,9 @@ namespace Assets.Scripts.FiguresOptions
 {
     public class SphereOptions : IOption
     {
-        public float radius = 1;
-        public int sectors = 20;
+        public float radius;
+        public int sectors;
+
+        public override string ToString() => $"r: {radius}, s: {sectors}";
     } 
 }
